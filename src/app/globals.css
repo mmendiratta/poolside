@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root { --font-display: "Playfair Display", serif; --font-body: "DM Sans", sans-serif; }
+  ::selection { background: #C8A84B33; color: #0D0D0D; }
+}
+
+@layer components {
+  .btn-primary { @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-felt text-chalk font-medium text-sm hover:bg-felt-light transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-felt focus:ring-offset-2 disabled:opacity-40 disabled:cursor-not-allowed; }
+  .btn-secondary { @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-transparent text-ink font-medium text-sm border border-border hover:border-ink hover:bg-ink/5 transition-all duration-200 focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed; }
+  .btn-gold { @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gold text-ink font-semibold text-sm hover:bg-gold-light transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 disabled:opacity-40 disabled:cursor-not-allowed; }
+  .input { @apply w-full px-4 py-3 rounded-xl border border-border bg-white text-ink text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-felt/30 focus:border-felt transition-all duration-200; }
+  .card { @apply bg-white rounded-[16px] shadow-card border border-border/60; }
+  .pool-card { @apply bg-white rounded-[16px] border border-border/60 shadow-card hover:shadow-card-hover transition-all duration-300; }
+  .label { @apply text-xs font-semibold text-muted uppercase tracking-wider; }
+  .tag { @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium; }
+}
+
+.stagger > * { animation: fadeUp 0.35s ease forwards; opacity: 0; }
+.stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger > *:nth-child(2) { animation-delay: 0.10s; }
+.stagger > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger > *:nth-child(4) { animation-delay: 0.20s; }
+.stagger > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger > *:nth-child(n+6) { animation-delay: 0.30s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
