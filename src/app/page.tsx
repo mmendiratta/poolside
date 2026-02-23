@@ -12,8 +12,8 @@ export default function HomePage() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-felt/5 blur-3xl pointer-events-none" />
         <div className="relative z-10 max-w-3xl mx-auto stagger">
           <div className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gold/15 text-pending mb-6">🎉 Private prediction markets for your group</div>
-          <h1 className="font-display text-5xl sm:text-6xl font-bold text-ink leading-tight mb-6"><span className="whitespace-nowrap">Make any moment</span><br /><span className="text-felt">a market.</span></h1>
-          <p className="text-muted text-lg leading-relaxed mb-10 max-w-lg mx-auto">Will they cry at the altar? First dance song? Who gives the best speech? Create a pool for the occasion, invite your crew, and let the predictions begin.</p>
+          <h1 className="font-display text-5xl sm:text-6xl font-bold text-ink leading-tight mb-6"><span className="whitespace-nowrap">Make any occasion</span><br /><span className="text-felt">worth predicting.</span></h1>
+          <p className="text-muted text-lg leading-relaxed mb-10 max-w-lg mx-auto">Create a private prediction hub for your wedding, birthday, work launch — anything. Share one link. Everyone picks. One person wins the bragging rights.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/create" className="btn-primary px-8 py-4 text-base">Create your pool →</Link>
             <a href="#how-it-works" className="btn-secondary px-8 py-4 text-base">See how it works</a>
