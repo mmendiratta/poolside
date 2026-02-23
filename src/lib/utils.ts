@@ -9,42 +9,42 @@ export function generateSlug(name: string): string {
   return `${base}-${suffix}`;
 }
 
-export interface ParticipantSession { participantId: string; sessionToken: string; name: string; }
+export interface MemberSession { memberId: string; sessionToken: string; name: string; }
 
-export function getSession(eventId: string): ParticipantSession | null {
+export function getSession(poolId: string): MemberSession | null {
   if (typeof window === "undefined") return null;
   try {
     const raw = localStorage.getItem("poolside_sessions");
     if (!raw) return null;
-    return (JSON.parse(raw) as Record<string, ParticipantSession>)[eventId] ?? null;
+    return (JSON.parse(raw) as Record<string, MemberSession>)[poolId] ?? null;
   } catch { return null; }
 }
 
-export function setSession(eventId: string, session: ParticipantSession): void {
+export function setSession(poolId: string, session: MemberSession): void {
   if (typeof window === "undefined") return;
   try {
     const raw = localStorage.getItem("poolside_sessions");
     const sessions = raw ? JSON.parse(raw) : {};
-    sessions[eventId] = session;
+    sessions[poolId] = session;
     localStorage.setItem("poolside_sessions", JSON.stringify(sessions));
   } catch {}
 }
 
-export function getManagerToken(eventId: string): string | null {
+export function getManagerToken(poolId: string): string | null {
   if (typeof window === "undefined") return null;
   try {
     const raw = localStorage.getItem("poolside_manager");
     if (!raw) return null;
-    return (JSON.parse(raw) as Record<string, string>)[eventId] ?? null;
+    return (JSON.parse(raw) as Record<string, string>)[poolId] ?? null;
   } catch { return null; }
 }
 
-export function setManagerToken(eventId: string, token: string): void {
+export function setManagerToken(poolId: string, token: string): void {
   if (typeof window === "undefined") return;
   try {
     const raw = localStorage.getItem("poolside_manager");
     const tokens = raw ? JSON.parse(raw) : {};
-    tokens[eventId] = token;
+    tokens[poolId] = token;
     localStorage.setItem("poolside_manager", JSON.stringify(tokens));
   } catch {}
 }
@@ -62,7 +62,9 @@ export function formatTimeRemaining(closesAt: string): string {
   return `${seconds}s`;
 }
 
-export function isPoolClosed(closesAt: string | null): boolean {
+export function isMarketClosed(closesAt: string | null): boolean {
   if (!closesAt) return false;
   return new Date(closesAt).getTime() < Date.now();
 }
+
+export const isPoolClosed = isMarketClosed;
