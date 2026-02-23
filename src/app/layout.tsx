@@ -6,7 +6,7 @@ const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-displa
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Poolside — Predict anything, together",
+  title: "Poolside - Predict anything, together",
   description: "Create private prediction pools for any occasion. Share one link. Everyone picks.",
 };
 
