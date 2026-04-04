@@ -6,7 +6,6 @@ import { supabase } from "@/lib/supabase-browser";
 import { getSession, setSession, getManagerToken, cn } from "@/lib/utils";
 import { PLAYERS_BY_TIER, PLAYER_BY_ID, DEADLINE, TOTAL_PICKS, PICKS_FROM_TIER_6 } from "@/lib/golf-data";
 import type { GolfLeaderboardEntry, GolfPickDetail } from "@/lib/golf.types";
-import type { Member } from "@/lib/database.types";
 
 const SYNC_INTERVAL_MS = 2 * 60 * 1000;
 
@@ -28,7 +27,7 @@ export default function GolfPoolPage() {
 
   const [pool, setPool] = useState<{ id: string; name: string; description: string | null; created_by_name: string } | null>(null);
   const [golfPoolId, setGolfPoolId] = useState<string | null>(null);
-  const [members, setMembers] = useState<Member[]>([]);
+  const [members, setMembers] = useState<{ member_id: string; name: string }[]>([]);
   const [leaderboard, setLeaderboard] = useState<GolfLeaderboardEntry[]>([]);
   const [isLocked, setIsLocked] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -369,7 +368,7 @@ export default function GolfPoolPage() {
                 {members.map(m => (
                   <li key={m.id} className="px-6 py-3 flex items-center justify-between">
                     <span className="font-medium text-ink text-sm">{m.name}</span>
-                    {session?.memberId === m.id && (
+                    {session?.memberId === m.member_id && (
                       <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-felt/10 text-felt">you</span>
                     )}
                   </li>
