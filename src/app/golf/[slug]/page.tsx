@@ -366,7 +366,7 @@ export default function GolfPoolPage() {
             ) : (
               <ul className="divide-y divide-border">
                 {members.map(m => (
-                  <li key={m.id} className="px-6 py-3 flex items-center justify-between">
+                  <li key={m.member_id} className="px-6 py-3 flex items-center justify-between">
                     <span className="font-medium text-ink text-sm">{m.name}</span>
                     {session?.memberId === m.member_id && (
                       <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-felt/10 text-felt">you</span>
