@@ -5,7 +5,10 @@ export default function HomePage() {
     <main className="min-h-screen bg-chalk flex flex-col">
       <nav className="flex items-center justify-between px-6 py-5 max-w-5xl mx-auto w-full">
         <span className="font-display text-xl font-bold text-ink tracking-tight">Pool<span className="text-felt">side</span></span>
-        <Link href="/create" className="btn-primary text-sm py-2 px-4">Create a pool</Link>
+        <div className="flex items-center gap-2">
+          <Link href="/golf/create" className="btn-secondary text-sm py-2 px-4">⛳ Masters pool</Link>
+          <Link href="/create" className="btn-primary text-sm py-2 px-4">Create a pool</Link>
+        </div>
       </nav>
 
       <section className="flex-1 flex flex-col items-center justify-center text-center px-3 sm:px-6 py-20 relative overflow-hidden">
