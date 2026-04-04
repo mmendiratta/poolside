@@ -450,10 +450,10 @@ function LeaderboardAccordion({ entry, isMe, open, onToggle }: {
           <div className="px-6 py-3 bg-chalk/40">
             <p className="text-xs text-muted font-medium uppercase tracking-wide">Picks — best 6 of 8 count</p>
           </div>
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto"><table className="w-full text-sm min-w-[480px]">
             <thead>
               <tr className="border-b border-border/60">
-                <th className="text-left px-6 py-2 label text-xs">Player</th>
+                <th className="text-left px-6 py-2 label text-xs sticky left-0 bg-white z-10">Player</th>
                 <th className="text-center px-3 py-2 label text-xs">Tier</th>
                 <th className="text-right px-3 py-2 label text-xs">Score</th>
                 <th className="text-right px-3 py-2 label text-xs">Pos</th>
@@ -463,12 +463,14 @@ function LeaderboardAccordion({ entry, isMe, open, onToggle }: {
             <tbody>
               {entry.picks.map((pick: GolfPickDetail) => (
                 <tr key={pick.player_id} className={cn("border-b border-border/40", !pick.counts && "opacity-40")}>
-                  <td className="px-6 py-3">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-ink">{pick.player_name}</span>
-                      {pick.status === "cut" && <span className="text-xs text-danger font-medium">CUT</span>}
-                      {pick.status === "wd" && <span className="text-xs text-muted font-medium">WD</span>}
-                      {!pick.counts && <span className="text-xs text-muted">(dropped)</span>}
+                  <td className={cn("px-6 py-3 sticky left-0 z-10", pick.counts ? "bg-white" : "bg-chalk/40")}>
+                    <div className="flex flex-col gap-0.5">
+                      <span className="font-medium text-ink whitespace-nowrap">{pick.player_name}</span>
+                      <div className="flex items-center gap-1.5">
+                        {pick.status === "cut" && <span className="text-xs text-danger font-medium">CUT</span>}
+                        {pick.status === "wd" && <span className="text-xs text-muted font-medium">WD</span>}
+                        {!pick.counts && <span className="text-xs text-muted">(dropped)</span>}
+                      </div>
                     </div>
                   </td>
                   <td className="px-3 py-3 text-center text-muted text-xs">{pick.tier}</td>
@@ -482,7 +484,7 @@ function LeaderboardAccordion({ entry, isMe, open, onToggle }: {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
           {entry.tiebreaker_score !== null && (
             <div className="px-6 py-3 border-t border-border/40 text-xs text-muted">
               Tiebreaker guess: <span className="font-semibold text-ink">{formatScore(entry.tiebreaker_score)}</span>
