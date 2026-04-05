@@ -244,7 +244,7 @@ export default function GolfPoolPage() {
       <div className="max-w-3xl mx-auto px-6 py-8 space-y-8">
 
         {/* Join */}
-        {!session && (
+        {!session && !isLocked && (
           <div className="card p-6">
             <h2 className="font-display text-xl font-bold text-ink mb-1">Join this pool</h2>
             <p className="text-muted text-sm mb-4">Enter your name to make your picks before Thursday 5am ET.</p>

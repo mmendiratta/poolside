@@ -24,6 +24,9 @@ export async function GET() {
     const competition = masters.competitions?.[0];
     if (!competition) return NextResponse.json({ synced: 0, message: "No competition data" });
 
+    // Use competition-level status to determine current round reliably
+    const currentRound = competition.status?.period ?? 1;
+
     const competitors: ESPNCompetitor[] = competition.competitors ?? [];
 
     // Build name→score map from ESPN
@@ -31,14 +34,6 @@ export async function GET() {
     for (const c of competitors) {
       const name = c.athlete?.displayName;
       if (name) espnMap.set(name.toLowerCase(), c);
-    }
-
-    // Determine max rounds with any hole data across the field (to infer cuts)
-    let maxRoundsWithData = 0;
-    for (const c of competitors) {
-      const rounds: ESPNRound[] = Array.isArray(c.linescores) ? c.linescores : [];
-      const withData = rounds.filter(r => (r.linescores?.length ?? 0) > 0).length;
-      if (withData > maxRoundsWithData) maxRoundsWithData = withData;
     }
 
     const upserts = [];
@@ -52,12 +47,11 @@ export async function GET() {
       const rounds: ESPNRound[] = Array.isArray(espn.linescores) ? espn.linescores : [];
       const activeRound = [...rounds].reverse().find(r => (r.linescores?.length ?? 0) > 0);
       const holes = activeRound?.linescores ?? [];
-      const thru = holes.length === 18 ? "F" : holes.length > 0 ? `${holes.length}` : null;
+      const thru = holes.length === 18 ? "F" : holes.length > 0 ? `${holes.length}` : rounds.length > 0 ? `R${currentRound}` : null;
 
-      // Infer cut: fewer rounds with data than field max, and not currently mid-round
-      const roundsWithData = rounds.filter(r => (r.linescores?.length ?? 0) > 0).length;
-      const hasActiveRound = rounds.some(r => { const len = r.linescores?.length ?? 0; return len > 0 && len < 18; });
-      const isCutInferred = maxRoundsWithData >= 3 && roundsWithData < maxRoundsWithData && !hasActiveRound;
+      // Infer cut: player has ≤2 rounds and tournament is past round 2 or complete
+      const tournamentComplete = competition.status?.type?.completed ?? false;
+      const isCutInferred = rounds.length <= 2 && (currentRound > 2 || tournamentComplete);
 
       const statusDesc = (espn.status?.type?.description ?? "").toLowerCase();
       let status: "active" | "cut" | "wd" | "complete" = "active";
@@ -85,7 +79,7 @@ export async function GET() {
       }
     }
 
-    return NextResponse.json({ synced: upserts.length });
+    return NextResponse.json({ synced: upserts.length, round: currentRound });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
@@ -110,6 +104,10 @@ interface ESPNEvent {
 }
 interface ESPNCompetition {
   competitors?: ESPNCompetitor[];
+  status?: {
+    period?: number;
+    type?: { name?: string; description?: string; completed?: boolean };
+  };
 }
 interface ESPNRound {
   value?: number;
