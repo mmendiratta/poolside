@@ -117,7 +117,7 @@ export const PLAYERS_BY_TIER = {
 
 export const PLAYER_BY_ID = Object.fromEntries(GOLF_PLAYERS.map(p => [p.id, p]));
 
-export const DEADLINE = "2026-04-10T09:00:00.000Z"; // 5am ET = 9am UTC
+export const DEADLINE = "2026-04-09T09:00:00.000Z"; // 5am ET = 9am UTC, Thursday Apr 9
 export const CUT_PENALTY = 8;
 export const PICKS_PER_TIER_1_5 = 1; // 1 from each of tiers 1-5
 export const PICKS_FROM_TIER_6 = 3;  // 3 from tier 6
