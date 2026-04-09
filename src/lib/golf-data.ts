@@ -69,7 +69,7 @@ export const GOLF_PLAYERS: GolfPlayer[] = [
   { id: "brian-harman", name: "Brian Harman", tier: 6, odds: "200/1", owgr: "50" },
   { id: "sam-stevens", name: "Sam Stevens", tier: 6, odds: "210/1", owgr: "45" },
   { id: "ryan-fox", name: "Ryan Fox", tier: 6, odds: "225/1", owgr: "51" },
-  { id: "sergio-garcia", name: "Sergio Garcia", tier: 6, odds: "225/1", owgr: ">200" },
+  { id: "sergio-garcia", name: "Sergio García", tier: 6, odds: "225/1", owgr: ">200" },
   { id: "wyndham-clark", name: "Wyndham Clark", tier: 6, odds: "225/1", owgr: "78" },
   { id: "max-greyserman", name: "Max Greyserman", tier: 6, odds: "230/1", owgr: "59" },
   { id: "dustin-johnson", name: "Dustin Johnson", tier: 6, odds: "240/1", owgr: ">200" },
