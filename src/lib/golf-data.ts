@@ -43,7 +43,7 @@ export const GOLF_PLAYERS: GolfPlayer[] = [
   // Tier 4
   { id: "sam-burns", name: "Sam Burns", tier: 4, odds: "72/1", owgr: "33" },
   { id: "corey-conners", name: "Corey Conners", tier: 4, odds: "82/1", owgr: "44" },
-  { id: "nicolai-hojgaard", name: "Nicolai Hojgaard", tier: 4, odds: "84/1", owgr: "36" },
+  { id: "nicolai-hojgaard", name: "Nicolai Højgaard", tier: 4, odds: "84/1", owgr: "36" },
   { id: "jj-spaun", name: "J.J. Spaun", tier: 4, odds: "88/1", owgr: "5" },
   { id: "kurt-kitayama", name: "Kurt Kitayama", tier: 4, odds: "88/1", owgr: "34" },
   { id: "jacob-bridgeman", name: "Jacob Bridgeman", tier: 4, odds: "94/1", owgr: "18" },
@@ -57,7 +57,7 @@ export const GOLF_PLAYERS: GolfPlayer[] = [
   { id: "gary-woodland", name: "Gary Woodland", tier: 5, odds: "110/1", owgr: "52" },
   { id: "max-homa", name: "Max Homa", tier: 5, odds: "115/1", owgr: "163" },
   { id: "sungjae-im", name: "Sungjae Im", tier: 5, odds: "120/1", owgr: "71" },
-  { id: "rasmus-hojgaard", name: "Rasmus Hojgaard", tier: 5, odds: "130/1", owgr: "57" },
+  { id: "rasmus-hojgaard", name: "Rasmus Højgaard", tier: 5, odds: "130/1", owgr: "57" },
   { id: "keegan-bradley", name: "Keegan Bradley", tier: 5, odds: "140/1", owgr: "26" },
   { id: "harry-hall", name: "Harry Hall", tier: 5, odds: "160/1", owgr: "62" },
   { id: "marco-penge", name: "Marco Penge", tier: 5, odds: "160/1", owgr: "37" },
