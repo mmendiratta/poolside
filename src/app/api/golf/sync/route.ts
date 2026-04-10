@@ -29,12 +29,6 @@ export async function GET() {
 
     const competitors: ESPNCompetitor[] = competition.competitors ?? [];
 
-    // Determine max completed rounds across the field — cut can only happen once field has 3+ rounds
-    const maxFieldRounds = competitors.reduce((max, c) => {
-      const completed = (c.linescores ?? []).filter(r => (r.linescores?.length ?? 0) > 0).length;
-      return Math.max(max, completed);
-    }, 0);
-
     // Build name→score map from ESPN
     const espnMap = new Map<string, ESPNCompetitor>();
     for (const c of competitors) {
@@ -55,14 +49,10 @@ export async function GET() {
       const holes = activeRound?.linescores ?? [];
       const thru = holes.length === 18 ? "F" : holes.length > 0 ? `${holes.length}` : rounds.length > 0 ? `R${currentRound}` : null;
 
-      // Infer cut: player has ≤2 rounds but field has moved to round 3+
-      const tournamentComplete = competition.status?.type?.completed ?? false;
-      const isCutInferred = rounds.length <= 2 && (maxFieldRounds >= 3 || tournamentComplete);
-
       const statusDesc = (espn.status?.type?.description ?? "").toLowerCase();
       let status: "active" | "cut" | "wd" | "complete" = "active";
-      if (statusName.includes("CUT") || statusDesc.includes("cut") || isCutInferred) status = "cut";
-      else if (statusName.includes("WD") || statusDesc.includes("withdraw")) status = "wd";
+      // Cut inference disabled — set manually in DB after round 2
+      if (statusName.includes("WD") || statusDesc.includes("withdraw")) status = "wd";
       else if (statusName.includes("COMPLETE") || statusDesc.includes("complete") || thru === "F") status = "complete";
 
       upserts.push({
