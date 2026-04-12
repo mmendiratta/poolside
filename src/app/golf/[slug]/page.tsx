@@ -476,7 +476,7 @@ function LeaderboardAccordion({ entry, isMe, open, onToggle }: {
                   <td className="px-3 py-3 text-center text-muted text-xs">{pick.tier}</td>
                   <td className={cn("px-3 py-3 text-right tabular-nums", scoreClass(pick.effective_score))}>
                     {(pick.status === "cut" || pick.status === "wd")
-                      ? `${formatScore(pick.score_to_par)} (+8)`
+                      ? `${formatScore(pick.score_to_par)} (+16)`
                       : formatScore(pick.score_to_par)}
                   </td>
                   <td className="px-3 py-3 text-right text-muted text-xs">{pick.position ?? "-"}</td>
