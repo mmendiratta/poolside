@@ -36,6 +36,13 @@ export async function GET() {
       if (name) espnMap.set(name.toLowerCase(), c);
     }
 
+    // Fetch existing statuses so we don't overwrite manually-set cut/wd
+    const { data: existingScores } = await supabaseAdmin
+      .from("golf_scores")
+      .select("player_id, status");
+    const existingStatusMap = new Map<string, string>();
+    for (const s of existingScores ?? []) existingStatusMap.set(s.player_id, s.status);
+
     const upserts = [];
     for (const player of GOLF_PLAYERS) {
       const espn = espnMap.get(player.name.toLowerCase());
@@ -49,11 +56,16 @@ export async function GET() {
       const holes = activeRound?.linescores ?? [];
       const thru = holes.length === 18 ? "F" : holes.length > 0 ? `${holes.length}` : rounds.length > 0 ? `R${currentRound}` : null;
 
-      const statusDesc = (espn.status?.type?.description ?? "").toLowerCase();
+      // Preserve manually-set cut/wd statuses — don't let sync overwrite them
+      const existingStatus = existingStatusMap.get(player.id);
       let status: "active" | "cut" | "wd" | "complete" = "active";
-      // Cut inference disabled — set manually in DB after round 2
-      if (statusName.includes("WD") || statusDesc.includes("withdraw")) status = "wd";
-      else if (statusName.includes("COMPLETE") || statusDesc.includes("complete") || thru === "F") status = "complete";
+      if (existingStatus === "cut" || existingStatus === "wd") {
+        status = existingStatus;
+      } else {
+        const statusDesc = (espn.status?.type?.description ?? "").toLowerCase();
+        if (statusName.includes("WD") || statusDesc.includes("withdraw")) status = "wd";
+        else if (statusName.includes("COMPLETE") || statusDesc.includes("complete") || thru === "F") status = "complete";
+      }
 
       upserts.push({
         player_id: player.id,
